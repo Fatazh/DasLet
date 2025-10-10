@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Modern Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <header>
+        <button type="button" class="sidebar-burger" onclick="toggleSidebar()">
+          <i class="bx bx-menu"></i>
+        </button>
+        <img src="assets/images/logo.svg" alt="logo"  />
+      </header>
+      <ul>
+        <li>
+          <button type="button" onclick="onClick(this)">
+            <i class="bx bx-home"></i>
+            <p>Dashboard</p>
+          </button>
+        </li>
+        <li>
+            <button type="button" onclick="onClick(this)">
+                <i class="bx bx-package"></i><p>Products</p>
+                <i class='bx bx-chevron-down'></i> 
+            </button>
+            <div class="sub-menu">
+                <ul>
+                    <li>
+                        <button type="button">
+                            Digital
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            Physical
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            Inventory
+                        </button>
+                    </li>
+                </ul>
+        </li>
+        <li>
+          <button type="button" onclick="onClick(this)">
+            <i class="bx bx-cart"></i>
+            <p>Orders</p>
+          </button>
+        </li>
+        <li>
+          <button type="button" onclick="onClick(this)">
+            <i class="bx bx-user"></i>
+            <p>Customers</p>
+          </button>
+        </li>
+      </ul>
+    </aside>
+    <script src="js/main.js"></script>
+  </body>
+</html>
