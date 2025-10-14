@@ -12,7 +12,8 @@
 
 body {
   margin: 0;
-  background-image: url("../assets/images/bg.jpeg");
+  /* background-image: url("../assets/images/bg.jpeg"); */
+  background: var(--main-color);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -32,17 +33,17 @@ button {
 
 .sidebar {
   position: fixed;
-  top: 24px;
-  left: 24px;
-  bottom: 24px;
+  top: 0;
+  left: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: 260px;
-  border-radius: 16px;
+  border-radius:0 16px 16px 0;
   padding: 0 16px;
   border: 1px solid rgb(255, 255, 255 / 8%);
-  background: rgb(0 0 0 /20%);
+  background: rgba(103, 6, 221, 0.498);
   backdrop-filter: blur(20px);
   transition: width 0.4s ease;
   overflow: hidden;
