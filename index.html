@@ -5,92 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>Modern Admin Dashboard</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
     <link
       rel="stylesheet"
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
     />
     <link rel="stylesheet" href="css/style.css" />
   </head>
-  <body>    
-    <aside class="sidebar">
-      <header>
-        <button type="button" class="sidebar-burger" onclick="toggleSidebar()">
-          <i class="bx bx-menu"></i>
-        </button>
-        <img src="assets/images/logo.svg" alt="logo"  />
-      </header>
-      <ul>
-        <li>
-          <button type="button" onclick="onClick(this)">
-            <i class="bx bx-home"></i>
-            <p>Dashboard</p>
+  <body>
+    <div class="app-container">
+      <aside class="sidebar">
+        <header>
+          <button type="button" class="sidebar-burger" onclick="toggleSidebar()">
+            <i class="bx bx-menu"></i>
           </button>
-        </li>
-        <li>
+          <img src="assets/images/logo.svg" alt="logo" />
+        </header>
+        <ul>
+          <li>
+            <button type="button" class="active" onclick="onClick(this)">
+              <i class="bx bx-home"></i>
+              <p>Dashboard</p>
+            </button>
+          </li>
+          <li>
             <button type="button" onclick="onClick(this)">
-                <i class="bx bx-package"></i><p>Products</p>
-                <i class='bx bx-chevron-down'></i> 
+              <i class="bx bx-package"></i>
+              <p>Products</p>
+              <i class="bx bx-chevron-down"></i>
             </button>
             <div class="sub-menu">
-                <ul>
-                    <li>
-                        <button type="button">
-                            Digital
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button">
-                            Physical
-                        </button>
-                    </li>
-                    <li>
-                        <button type="button">
-                            Inventory
-                        </button>
-                    </li>
-                </ul>
-        </li>
-        <li>
-          <button type="button" onclick="onClick(this)">
-            <i class="bx bx-cart"></i>
-            <p>Orders</p>
-          </button>
-        </li>
-        <li>
-          <button type="button" onclick="onClick(this)">
-            <i class="bx bx-user"></i>
-            <p>Customers</p>
-          </button>
-        </li>
-      </ul>
-    </aside>
+              <ul>
+                <li><button type="button">Digital</button></li>
+                <li><button type="button">Physical</button></li>
+                <li><button type="button">Inventory</button></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <button type="button" onclick="onClick(this)">
+              <i class="bx bx-cart"></i>
+              <p>Orders</p>
+            </button>
+          </li>
+          <li>
+            <button type="button" onclick="onClick(this)">
+              <i class="bx bx-user"></i>
+              <p>Customers</p>
+            </button>
+          </li>
+        </ul>
+      </aside>
 
-    <main class="main-content">
-    <nav class="navbar">
-      <div class="search-bar">
-        <i class="bx bx-search"></i>
-        <input type="search" placeholder="Search..." />
-      </div>
-      <div class="user-profile">
-        <img src="https://i.pravatar.cc/40" alt="User Avatar" />
-        <div class="user-info">
-          <p class="user-name">John Doe</p>
-          <p class="user-role">Administrator</p>
+      <main class="main-content">
+        <nav class="navbar">
+          <div class="search-bar">
+            <i class="bx bx-search"></i>
+            <input type="search" placeholder="Search..." />
+          </div>
+          <div class="user-profile">
+            <img src="https://i.pravatar.cc/40" alt="User Avatar" />
+            <div class="user-info">
+              <p class="user-name">John Doe</p>
+              <p class="user-role">Administrator</p>
+            </div>
+          </div>
+        </nav>
+
+        <div class="page-content">
+          <h1>Dashboard</h1>
+          <p>Welcome to your modern admin dashboard!</p>
         </div>
-      </div>
-    </nav>
-
-    <div class="page-content">
-      <h1>Dashboard</h1>
-      <p>Welcome to your modern admin dashboard!</p>
+      </main>
     </div>
-  </main>
+
     <script src="js/main.js"></script>
   </body>
 </html>

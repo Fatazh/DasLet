@@ -1,12 +1,10 @@
+/* --- VARIABLES & GLOBAL RESET --- */
 :root {
-  /* Variabel untuk ukuran dan transisi agar mudah diubah */
-  --sidebar-width-expanded: 260px;
+  --sidebar-width-expanded: 220px;
   --sidebar-width-collapsed: 84px;
   --header-height: 72px;
   --item-height: 50px;
   --transition-duration: 0.4s;
-  
-  /* Variabel warna dan font Anda */
   --main-color: #f1f1f1;
   --secondary-color: #2ecc71;
   --font-color: #333;
@@ -20,13 +18,8 @@
 
 body {
   margin: 0;
-  background-image: url("../assets/images/bg.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: 50%;
-  height: 100vh;
-  overflow: hidden;
   font-family: var(--font-family);
+  overflow: hidden;
 }
 
 button {
@@ -37,25 +30,40 @@ button {
   text-align: left;
 }
 
+/* --- MAIN LAYOUT CONTAINER --- */
+.app-container {
+  display: flex;
+  height: 100vh;
+  /* background-image: url("../assets/images/bg.jpeg"); */
+  background: var(--main-color);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  position: relative; /* Penting untuk positioning hover sidebar */
+}
+
+/* --- SIDEBAR STYLING (FLEX ITEM) --- */
 .sidebar {
-  position: fixed;
-  top: 5px;
-  left: 5px;
-  bottom: 5px;
   display: flex;
   flex-direction: column;
   gap: 8px;
   width: var(--sidebar-width-expanded);
-  border-radius: 16px;
+  flex-shrink: 0;
+  border-radius: 0 12px 12px 0;
   padding: 0 16px;
-  border: 1px solid rgb(255 255 255 / 8%);
-  background: rgb(0 0 0 / 20%);
+  background: rgba(102, 4, 221, 0.89);
   backdrop-filter: blur(20px);
+  border-right: 1px solid rgb(255 255 255 / 8%);
   transition: width var(--transition-duration) ease;
   overflow: hidden;
-  z-index: 1000;
+  color: var(--main-color);
 }
 
+.sidebar.collapsed {
+  width: var(--sidebar-width-collapsed);
+}
+
+/* --- SIDEBAR INTERNAL ELEMENTS --- */
 .sidebar header {
   display: flex;
   align-items: center;
@@ -81,7 +89,6 @@ button {
   margin: 0;
 }
 
-/* Mengelompokkan semua item yang akan disembunyikan/ditampilkan */
 .sidebar button p,
 .sidebar header img,
 .sidebar .bx-chevron-down {
@@ -90,6 +97,20 @@ button {
   opacity: 1;
   white-space: nowrap;
   visibility: visible;
+}
+
+.sidebar.collapsed button p,
+.sidebar.collapsed header img,
+.sidebar.collapsed .bx-chevron-down {
+  opacity: 0;
+  width: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.sidebar.collapsed header {
+  justify-content: center;
+  padding: 0;
 }
 
 .sidebar button {
@@ -107,6 +128,10 @@ button {
   padding: 0 12px 0 16px;
   color: var(--main-color);
   transition: background 0.3s, padding 0.3s ease;
+}
+
+.sidebar.collapsed > ul > li > button {
+  padding: 0 16px;
 }
 
 .sidebar button p:nth-child(2) {
@@ -132,56 +157,7 @@ button {
   rotate: -180deg;
 }
 
-/* --- LOGIKA STATE COLLAPSED --- */
-
-.sidebar.collapsed {
-  width: var(--sidebar-width-collapsed);
-}
-
-/* Menyembunyikan elemen teks dan ikon saat sidebar collapsed */
-.sidebar.collapsed button p,
-.sidebar.collapsed header img,
-.sidebar.collapsed .bx-chevron-down {
-  opacity: 0;
-  width: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.sidebar.collapsed header {
-  justify-content: center;
-  padding: 0;
-}
-
-.sidebar.collapsed button {
-  padding: 0 16px;
-}
-
-/* --- LOGIKA HOVER SAAT COLLAPSED --- */
-
-/* Saat di-hover, kembalikan lebar sidebar ke ukuran semula */
-.sidebar.collapsed:hover {
-  width: var(--sidebar-width-expanded);
-}
-
-/* Saat di-hover, kembalikan visibilitas elemen teks dan ikon */
-.sidebar.collapsed:hover button p,
-.sidebar.collapsed:hover header img,
-.sidebar.collapsed:hover .bx-chevron-down {
-  opacity: 1;
-  width: auto;
-  visibility: visible;
-  pointer-events: auto;
-}
-
-/* Saat di-hover, kembalikan padding dan alignment header */
-.sidebar.collapsed:hover header {
-  justify-content: flex-start;
-  padding: 0 20px 0 0;
-}
-
-/* --- LOGIKA SUB-MENU --- */
-
+/* --- SUB-MENU STYLING --- */
 .sub-menu {
   position: relative;
   overflow: hidden;
@@ -201,72 +177,56 @@ button {
   padding-left: 52px;
 }
 
-.sub-menu button::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 24px;
-  translate: 0 -50%;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgb(255 255 255 / 35%);
-  transition: left 0.3s ease, translate 0.3s ease;
+/* --- LOGIKA HOVER SAAT COLLAPSED (FLYOUT EFFECT) --- */
+.sidebar.collapsed:hover {
+  width: var(--sidebar-width-expanded);
 }
 
-/* State collapsed untuk sub-menu */
-.sidebar.collapsed .sub-menu button {
-  padding-left: 16px;
+.sidebar.collapsed:hover button p,
+.sidebar.collapsed:hover header img,
+.sidebar.collapsed:hover .bx-chevron-down {
+  opacity: 1;
+  width: auto;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-.sidebar.collapsed .sub-menu button::before {
-  left: 50%;
-  translate: -50% -50%;
+.sidebar.collapsed:hover header {
+  justify-content: flex-start;
+  padding: 0 20px 0 0;
 }
 
-/* Saat di-hover, CSS akan otomatis kembali ke style default .sub-menu */
-.sidebar.collapsed:hover .sub-menu button::before {
-  left: 24px;
-  translate: 0 -50%;
+.sidebar.collapsed:hover > ul > li > button {
+  padding: 0 12px 0 16px;
 }
 
-/* --- MAIN CONTENT & NAVBAR STYLING --- */
-
+/* --- MAIN CONTENT & NAVBAR (FLEX ITEM) --- */
 .main-content {
-  position: relative;
-  height: 100vh;
-  /* Memberi jarak kiri seukuran sidebar yang terbuka */
-  margin-left: var(--sidebar-width-expanded);
-  padding: 1rem 2rem;
-  transition: margin-left var(--transition-duration) ease;
-  color: white; /* Ganti warna teks jika perlu */
+  flex: 1;
+  overflow-y: auto;
+  min-width: 0;
+  color: rgb(36, 3, 3);
+  padding: 0 .5rem;
 }
 
-/* Saat sidebar diciutkan, kurangi jarak kiri main-content */
-.sidebar.collapsed ~ .main-content {
-  margin-left: var(--sidebar-width-collapsed);
-}
-
-/* Navbar Styling */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: var(--header-height);
   padding: 0 1rem;
-  background: rgb(0 0 0 / 20%);
+  background: rgb(255, 255, 255);
   border: 1px solid rgb(255 255 255 / 8%);
   backdrop-filter: blur(20px);
-  border-radius: 12px;
-  margin-bottom: 1rem;
+  border-radius: 0 0 12px 12px;
+  margin-bottom: 1.5rem;
 }
 
-/* Search Bar Styling */
 .search-bar {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgb(255 255 255 / 10%);
+  background: rgba(198, 184, 184, 0.653);
   padding: 8px 16px;
   border-radius: 20px;
   color: var(--main-color);
@@ -278,7 +238,7 @@ button {
 }
 
 .search-bar input {
-  background: transparent;
+  background: rgba(162, 150, 150, 0.137);
   border: none;
   outline: none;
   color: var(--main-color);
@@ -291,7 +251,6 @@ button {
   color: rgb(255 255 255 / 50%);
 }
 
-/* User Profile Styling */
 .user-profile {
   display: flex;
   align-items: center;
@@ -306,30 +265,21 @@ button {
   border: 2px solid var(--primary-color);
 }
 
-.user-profile .user-info {
-  display: flex;
-  flex-direction: column;
+.user-profile .user-info p {
+  margin: 0;
+  line-height: 1.2;
 }
 
 .user-profile .user-name {
   font-weight: 600;
   font-size: 16px;
-  margin: 0;
-  line-height: 1.2;
 }
 
 .user-profile .user-role {
   font-size: 12px;
-  margin: 0;
   color: rgb(255 255 255 / 70%);
-  line-height: 1.2;
-}
-
-/* Contoh styling untuk konten halaman */
-.page-content {
-    padding: 20px;
 }
 
 .page-content h1 {
-    margin-top: 0;
+  margin-top: 0;
 }
