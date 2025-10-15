@@ -1,4 +1,12 @@
 :root {
+  /* Variabel untuk ukuran dan transisi agar mudah diubah */
+  --sidebar-width-expanded: 260px;
+  --sidebar-width-collapsed: 84px;
+  --header-height: 72px;
+  --item-height: 50px;
+  --transition-duration: 0.4s;
+  
+  /* Variabel warna dan font Anda */
   --main-color: #f1f1f1;
   --secondary-color: #2ecc71;
   --font-color: #333;
@@ -12,8 +20,7 @@
 
 body {
   margin: 0;
-  /* background-image: url("../assets/images/bg.jpeg"); */
-  background: var(--main-color);
+  background-image: url("../assets/images/bg.jpeg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
@@ -28,41 +35,61 @@ button {
   padding: 0;
   cursor: pointer;
   text-align: left;
-  transition: 0.3s;
 }
 
 .sidebar {
   position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
+  top: 5px;
+  left: 5px;
+  bottom: 5px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  width: 260px;
-  border-radius:0 16px 16px 0;
+  width: var(--sidebar-width-expanded);
+  border-radius: 16px;
   padding: 0 16px;
-  border: 1px solid rgb(255, 255, 255 / 8%);
-  background: rgba(103, 6, 221, 0.498);
+  border: 1px solid rgb(255 255 255 / 8%);
+  background: rgb(0 0 0 / 20%);
   backdrop-filter: blur(20px);
-  transition: width 0.4s ease;
+  transition: width var(--transition-duration) ease;
   overflow: hidden;
+  z-index: 1000;
 }
 
 .sidebar header {
   display: flex;
   align-items: center;
-  height: 72px;
+  height: var(--header-height);
   padding: 0 20px 0 0;
-  border-bottom: 1px solid rgb(255, 255, 255 / 8%);
+  border-bottom: 1px solid rgb(255 255 255 / 8%);
+  transition: padding 0.3s ease, justify-content 0.3s ease;
 }
 
 .sidebar header button {
   width: 52px;
+  min-width: 52px;
 }
 
 .sidebar header img {
   height: 24px;
+}
+
+.sidebar ul {
+  display: grid;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Mengelompokkan semua item yang akan disembunyikan/ditampilkan */
+.sidebar button p,
+.sidebar header img,
+.sidebar .bx-chevron-down {
+  transition: opacity 0.3s ease, width 0.3s ease;
+  width: auto;
+  opacity: 1;
+  white-space: nowrap;
+  visibility: visible;
 }
 
 .sidebar button {
@@ -71,7 +98,7 @@ button {
   gap: 16px;
   align-items: center;
   width: 100%;
-  height: 50px;
+  height: var(--item-height);
   border-radius: 6px;
   font-family: inherit;
   font-size: 16px;
@@ -79,6 +106,7 @@ button {
   line-height: 1;
   padding: 0 12px 0 16px;
   color: var(--main-color);
+  transition: background 0.3s, padding 0.3s ease;
 }
 
 .sidebar button p:nth-child(2) {
@@ -86,51 +114,34 @@ button {
 }
 
 .sidebar button:is(.active, :hover) {
-  background: rgb(0 0 0 /30%);
-}
-
-.sidebar button i {
-  transition: 0.3s;
-}
-
-.sidebar button.active > i:nth-child(3) {
-  rotate: -180deg;
+  background: rgb(0 0 0 / 30%);
 }
 
 .sidebar button:not(.active):hover {
-  background: rgb(0 0 0 /10%);
+  background: rgb(0 0 0 / 10%);
 }
 
-.sidebar ul {
-  display: grid;
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
+.sidebar i {
+  font-size: 20px;
+  width: 20px;
+  min-width: 20px;
+  transition: rotate 0.3s;
 }
 
-.sidebar button p,
-.sidebar button img,
-.sidebar button .bx-chevron-down {
-  transition: opacity 0.3s ease, width 0.3s ease;
-  width: auto;
-  opacity: 1;
-  white-space: nowrap;
-  visibility: visible;
+.sidebar button.active > .bx-chevron-down {
+  rotate: -180deg;
 }
+
+/* --- LOGIKA STATE COLLAPSED --- */
 
 .sidebar.collapsed {
-  width: 84px;
+  width: var(--sidebar-width-collapsed);
 }
 
-.sidebar.collapsed button {
-  justify-content: flex-start;
-  padding: 0 16px;
-}
-
+/* Menyembunyikan elemen teks dan ikon saat sidebar collapsed */
 .sidebar.collapsed button p,
-.sidebar.collapsed button img,
-.sidebar.collapsed button .bx-chevron-down {
+.sidebar.collapsed header img,
+.sidebar.collapsed .bx-chevron-down {
   opacity: 0;
   width: 0;
   visibility: hidden;
@@ -138,61 +149,51 @@ button {
 }
 
 .sidebar.collapsed header {
-  padding: 0 16px;
   justify-content: center;
-}
-
-.sidebar.collapsed header img {
-  width: 0;
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-  margin: 0;
   padding: 0;
 }
 
-.sidebar.collapsed header .sidebar-burger {
-  width: 100%;
-  justify-content: center;
-}
-.sidebar.collapsed:hover header .sidebar-burger {
-  width: 30%;
-  justify-content: flex-start;
+.sidebar.collapsed button {
+  padding: 0 16px;
 }
 
+/* --- LOGIKA HOVER SAAT COLLAPSED --- */
+
+/* Saat di-hover, kembalikan lebar sidebar ke ukuran semula */
 .sidebar.collapsed:hover {
-  width: 260px;
+  width: var(--sidebar-width-expanded);
 }
+
+/* Saat di-hover, kembalikan visibilitas elemen teks dan ikon */
 .sidebar.collapsed:hover button p,
-.sidebar.collapsed:hover button img,
-.sidebar.collapsed:hover button .bx-chevron-down {
+.sidebar.collapsed:hover header img,
+.sidebar.collapsed:hover .bx-chevron-down {
   opacity: 1;
   width: auto;
   visibility: visible;
   pointer-events: auto;
 }
+
+/* Saat di-hover, kembalikan padding dan alignment header */
 .sidebar.collapsed:hover header {
-  padding: 0 20px 0 0;
   justify-content: flex-start;
+  padding: 0 20px 0 0;
 }
-.sidebar.collapsed:hover header img{
-  width: auto;
-  opacity: 1;
-  visibility: visible;
-  pointer-events: auto;
-}
+
+/* --- LOGIKA SUB-MENU --- */
 
 .sub-menu {
   position: relative;
   overflow: hidden;
   height: 0;
-  transition: 0.5s;
+  transition: height 0.5s ease;
 }
 
 .sub-menu ul {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   display: grid;
 }
 
@@ -209,33 +210,126 @@ button {
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: rgb(255, 255, 255 / 35%);
+  background: rgb(255 255 255 / 35%);
+  transition: left 0.3s ease, translate 0.3s ease;
 }
 
-.sidebar .material-symbols-outlined {
-  font-size: 16px;
-}
-
-.sidebar i {
-  font-size: 20px;
-  width: 20px;
-  max-width: 20px;
-  min-width: 20px;
-}
-
-.sidebar.collapsed .sub-menu button{
+/* State collapsed untuk sub-menu */
+.sidebar.collapsed .sub-menu button {
   padding-left: 16px;
 }
 
-.sidebar.collapsed:hover .sub-menu button{
-  padding-left: 52px;
-}
-.sidebar.collapsed .sub-menu button::before{
+.sidebar.collapsed .sub-menu button::before {
   left: 50%;
-  translate: translate(-50%, -50%);
+  translate: -50% -50%;
 }
 
-.sidebar.collapsed:hover .sub-menu button::before{
+/* Saat di-hover, CSS akan otomatis kembali ke style default .sub-menu */
+.sidebar.collapsed:hover .sub-menu button::before {
   left: 24px;
-  translate: translate(0, -50%);
+  translate: 0 -50%;
+}
+
+/* --- MAIN CONTENT & NAVBAR STYLING --- */
+
+.main-content {
+  position: relative;
+  height: 100vh;
+  /* Memberi jarak kiri seukuran sidebar yang terbuka */
+  margin-left: var(--sidebar-width-expanded);
+  padding: 1rem 2rem;
+  transition: margin-left var(--transition-duration) ease;
+  color: white; /* Ganti warna teks jika perlu */
+}
+
+/* Saat sidebar diciutkan, kurangi jarak kiri main-content */
+.sidebar.collapsed ~ .main-content {
+  margin-left: var(--sidebar-width-collapsed);
+}
+
+/* Navbar Styling */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--header-height);
+  padding: 0 1rem;
+  background: rgb(0 0 0 / 20%);
+  border: 1px solid rgb(255 255 255 / 8%);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+/* Search Bar Styling */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgb(255 255 255 / 10%);
+  padding: 8px 16px;
+  border-radius: 20px;
+  color: var(--main-color);
+  width: 300px;
+}
+
+.search-bar i {
+  font-size: 20px;
+}
+
+.search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--main-color);
+  font-family: inherit;
+  font-size: 16px;
+  width: 100%;
+}
+
+.search-bar input::placeholder {
+  color: rgb(255 255 255 / 50%);
+}
+
+/* User Profile Styling */
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-profile img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--primary-color);
+}
+
+.user-profile .user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-profile .user-name {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.user-profile .user-role {
+  font-size: 12px;
+  margin: 0;
+  color: rgb(255 255 255 / 70%);
+  line-height: 1.2;
+}
+
+/* Contoh styling untuk konten halaman */
+.page-content {
+    padding: 20px;
+}
+
+.page-content h1 {
+    margin-top: 0;
 }
