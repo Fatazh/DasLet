@@ -15,10 +15,12 @@
     <div class="app-container">
       <aside class="sidebar">
         <header>
-          <button type="button" class="sidebar-burger" onclick="toggleSidebar()">
-            <i class="bx bx-menu"></i>
-          </button>
-          <img src="assets/images/logo.svg" alt="logo" />
+          <header>
+            <a href="#" class="logo-wrapper">
+              <img src="assets/images/logo.svg" alt="logo" />
+              <h3 class="logo-text">CACAKLALI</h3>
+            </a>
+          </header>
         </header>
         <ul>
           <li>
@@ -58,6 +60,13 @@
 
       <main class="main-content">
         <nav class="navbar">
+          <button
+            type="button"
+            class="sidebar-burger"
+            onclick="toggleSidebar()"
+          >
+            <i class="bx bx-menu"></i>
+          </button>
           <div class="search-bar">
             <i class="bx bx-search"></i>
             <input type="search" placeholder="Search..." />
@@ -72,8 +81,31 @@
         </nav>
 
         <div class="page-content">
-          <h1>Dashboard</h1>
-          <p>Welcome to your modern admin dashboard!</p>
+          <div class="page-content">
+            <h1>Dashboard</h1>
+            <p class="subtitle">Welcome to your modern admin dashboard!</p>
+
+            <div class="card">
+              <div class="card-header">
+                <h2>Sales Overview</h2>
+              </div>
+              <div class="card-body">
+                <p>
+                  Here is where you can display charts, stats, or other
+                  important sales information.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="card-header">
+                <h2>Recent Activities</h2>
+              </div>
+              <div class="card-body">
+                <p>A list of recent user activities would go here.</p>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
     </div>

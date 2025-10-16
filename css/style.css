@@ -1,15 +1,26 @@
 /* --- VARIABLES & GLOBAL RESET --- */
 :root {
+  /* Size & Spacing */
   --sidebar-width-expanded: 220px;
   --sidebar-width-collapsed: 84px;
   --header-height: 72px;
   --item-height: 50px;
+  --icon-width: 20px;
+  --base-padding: 16px;
   --transition-duration: 0.4s;
-  --main-color: #f1f1f1;
+
+  /* Font Color */
+  --font-color-primary: #1A1A1A;
+  --font-color-secondary: #6B7280;
+  --background-main: #F9FAFB;
+  --background-card: #FFFFFF;
+  --border-color: #E5E7E8;
+  --font-family: "Poppins", sans-serif;
+
+  /* Primary Color */
+  --primary-color: #6604DD;
+  --primary-color-dark: #4D03A5;
   --secondary-color: #2ecc71;
-  --font-color: #333;
-  --font-family: "Arial, sans-serif";
-  --primary-color: #3498db;
 }
 
 * {
@@ -19,7 +30,14 @@
 body {
   margin: 0;
   font-family: var(--font-family);
+  color: var(--font-color-primary, #333);
+  background-color: var(--background-main);
   overflow: hidden;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-family); 
+  color: #1A1A1A;
 }
 
 button {
@@ -39,7 +57,7 @@ button {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: 50%;
-  position: relative; /* Penting untuk positioning hover sidebar */
+  position: relative; 
 }
 
 /* --- SIDEBAR STYLING (FLEX ITEM) --- */
@@ -56,7 +74,8 @@ button {
   border-right: 1px solid rgb(255 255 255 / 8%);
   transition: width var(--transition-duration) ease;
   overflow: hidden;
-  color: var(--main-color);
+  color: var(--background-main);
+  font-family: var(--font-family);
 }
 
 .sidebar.collapsed {
@@ -78,7 +97,7 @@ button {
   min-width: 52px;
 }
 
-.sidebar header img {
+.sidebar header .logo-text {
   height: 24px;
 }
 
@@ -90,7 +109,7 @@ button {
 }
 
 .sidebar button p,
-.sidebar header img,
+.sidebar header .logo-text,
 .sidebar .bx-chevron-down {
   transition: opacity 0.3s ease, width 0.3s ease;
   width: auto;
@@ -100,7 +119,7 @@ button {
 }
 
 .sidebar.collapsed button p,
-.sidebar.collapsed header img,
+.sidebar.collapsed header .logo-text,
 .sidebar.collapsed .bx-chevron-down {
   opacity: 0;
   width: 0;
@@ -113,6 +132,7 @@ button {
   padding: 0;
 }
 
+/* ---- SIDEBAR BUTTON ---- */
 .sidebar button {
   position: relative;
   display: flex;
@@ -121,7 +141,7 @@ button {
   width: 100%;
   height: var(--item-height);
   border-radius: 6px;
-  font-family: inherit;
+  font-family: var(--font-family);
   font-size: 16px;
   font-weight: 500;
   line-height: 1;
@@ -146,6 +166,20 @@ button {
   background: rgb(0 0 0 / 10%);
 }
 
+.sidebar button:hover {
+  background: rgba(255, 255, 255, 0.1); /* Hover lebih soft */
+}
+
+.sidebar button.active {
+  background: var(--primary-color); /* Gunakan warna primer solid */
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(102, 4, 221, 0.3);
+}
+
+.sidebar button.active > .bx-chevron-down {
+  rotate: -180deg;
+}
+
 .sidebar i {
   font-size: 20px;
   width: 20px;
@@ -153,9 +187,7 @@ button {
   transition: rotate 0.3s;
 }
 
-.sidebar button.active > .bx-chevron-down {
-  rotate: -180deg;
-}
+
 
 /* --- SUB-MENU STYLING --- */
 .sub-menu {
@@ -174,7 +206,7 @@ button {
 }
 
 .sub-menu button {
-  padding-left: 52px;
+  padding-left: calc(var(--base-padding) + var(--icon-width) + var(--base-padding));
 }
 
 /* --- LOGIKA HOVER SAAT COLLAPSED (FLYOUT EFFECT) --- */
@@ -183,7 +215,7 @@ button {
 }
 
 .sidebar.collapsed:hover button p,
-.sidebar.collapsed:hover header img,
+.sidebar.collapsed:hover header .logo-text,
 .sidebar.collapsed:hover .bx-chevron-down {
   opacity: 1;
   width: auto;
@@ -205,8 +237,8 @@ button {
   flex: 1;
   overflow-y: auto;
   min-width: 0;
-  color: rgb(36, 3, 3);
-  padding: 0 .5rem;
+  background-color: var(--background-main);
+  padding: .1rem .5rem;
 }
 
 .navbar {
@@ -215,10 +247,11 @@ button {
   align-items: center;
   height: var(--header-height);
   padding: 0 1rem;
-  background: rgb(255, 255, 255);
-  border: 1px solid rgb(255 255 255 / 8%);
+  background: var(--background-card);
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.199);
   backdrop-filter: blur(20px);
-  border-radius: 0 0 12px 12px;
+  border-radius: 12px;
   margin-bottom: 1.5rem;
 }
 
@@ -226,29 +259,39 @@ button {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(198, 184, 184, 0.653);
+  background: #f0f0f0;
+  border: 1px solid transparent;
   padding: 8px 16px;
-  border-radius: 20px;
-  color: var(--main-color);
-  width: 300px;
+  border-radius: 25px;
+  width: 350px;
+  transition: all 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.search-bar:focus-within {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  background-color: #fff; 
 }
 
 .search-bar i {
   font-size: 20px;
+  color: #888;
+  transition: color 0.3s ease;
 }
 
 .search-bar input {
-  background: rgba(162, 150, 150, 0.137);
+  background:transparent;
   border: none;
   outline: none;
-  color: var(--main-color);
-  font-family: inherit;
+  color: var(--font-color);
+  font-family: var(--font-family);
   font-size: 16px;
   width: 100%;
 }
 
 .search-bar input::placeholder {
-  color: rgb(255 255 255 / 50%);
+  color: #aaa;
 }
 
 .user-profile {
@@ -280,6 +323,44 @@ button {
   color: rgb(255 255 255 / 70%);
 }
 
+/* --- PAGE CONTENT AREA --- */
+
+.page-content{
+  padding: 1.5rem;
+}
+
 .page-content h1 {
   margin-top: 0;
+  color: var(--primary-color-dark);
+  font-family:  var(--font-family);
+}
+
+
+/* --- CARD COMPONENT --- */
+.card {
+  background-color: #FFFFFF; /* Warna latar putih bersih */
+  border-radius: 12px; /* Sudut yang lebih tumpul dan modern */
+  padding: 1.5rem; /* Padding internal agar konten tidak menempel di tepi card */
+  margin-top: 1.5rem; /* Jarak dari elemen di atasnya */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05); /* Shadow yang sangat halus untuk efek 'terangkat' */
+  border: 1px solid #E5E7EB; /* Border tipis untuk definisi yang lebih jelas */
+}
+
+/* Opsional: Struktur Header dan Body di dalam Card */
+.card-header {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.card-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-body p {
+  margin: 0;
+  color: #6B7280;
 }
