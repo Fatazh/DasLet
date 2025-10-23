@@ -32,7 +32,6 @@ body {
   font-family: var(--font-family);
   color: var(--font-color-primary, #333);
   background-color: var(--background-main);
-  overflow: hidden;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -92,7 +91,7 @@ button {
   transition: padding 0.3s ease, justify-content 0.3s ease;
 }
 
-.sidebar header button {
+.sidebar header a {
   width: 52px;
   min-width: 52px;
 }
@@ -118,7 +117,7 @@ button {
   visibility: visible;
 }
 
-.sidebar.collapsed button p,
+.sidebar.collapsed a p,
 .sidebar.collapsed header .logo-text,
 .sidebar.collapsed .bx-chevron-down {
   opacity: 0;
@@ -133,7 +132,7 @@ button {
 }
 
 /* ---- SIDEBAR BUTTON ---- */
-.sidebar button {
+.sidebar a {
   position: relative;
   display: flex;
   gap: 16px;
@@ -146,31 +145,32 @@ button {
   font-weight: 500;
   line-height: 1;
   padding: 0 12px 0 16px;
-  color: var(--main-color);
+  color: var(--background-main);
   transition: background 0.3s, padding 0.3s ease;
+  text-decoration: none;
 }
 
-.sidebar.collapsed > ul > li > button {
+.sidebar.collapsed > ul > li > a {
   padding: 0 16px;
 }
 
-.sidebar button p:nth-child(2) {
+.sidebar a p:nth-child(2) {
   flex: 1 1 auto;
 }
 
-.sidebar button:is(.active, :hover) {
+.sidebar a:is(.active, :hover) {
   background: rgb(0 0 0 / 30%);
 }
 
-.sidebar button:not(.active):hover {
+.sidebar a:not(.active):hover {
   background: rgb(0 0 0 / 10%);
 }
 
-.sidebar button:hover {
+.sidebar a:hover {
   background: rgba(255, 255, 255, 0.1); /* Hover lebih soft */
 }
 
-.sidebar button.active {
+.sidebar a.active {
   background: var(--primary-color); /* Gunakan warna primer solid */
   color: #fff;
   box-shadow: 0 4px 12px rgba(102, 4, 221, 0.3);
@@ -187,8 +187,6 @@ button {
   transition: rotate 0.3s;
 }
 
-
-
 /* --- SUB-MENU STYLING --- */
 .sub-menu {
   position: relative;
@@ -203,10 +201,36 @@ button {
   left: 0;
   width: 100%;
   display: grid;
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
 
-.sub-menu button {
+.sub-menu a {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: var(--item-height);
   padding-left: calc(var(--base-padding) + var(--icon-width) + var(--base-padding));
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: 400;
+  color: var(--background-main);
+  text-decoration: none;
+  opacity: 0.8;
+  transition: all 0.3s;
+}
+
+.sub-menu a:hover {
+  background: rgba(0, 0, 0, 0.1);
+  opacity: 1;
+}
+
+.sub-menu a.active {
+  
+  color: #fff;
+  font-weight: 600;
+  opacity: 1;
 }
 
 /* --- LOGIKA HOVER SAAT COLLAPSED (FLYOUT EFFECT) --- */
@@ -214,7 +238,7 @@ button {
   width: var(--sidebar-width-expanded);
 }
 
-.sidebar.collapsed:hover button p,
+.sidebar.collapsed:hover a p,
 .sidebar.collapsed:hover header .logo-text,
 .sidebar.collapsed:hover .bx-chevron-down {
   opacity: 1;
@@ -228,7 +252,7 @@ button {
   padding: 0 20px 0 0;
 }
 
-.sidebar.collapsed:hover > ul > li > button {
+.sidebar.collapsed:hover > ul > li > a {
   padding: 0 12px 0 16px;
 }
 
@@ -320,7 +344,7 @@ button {
 
 .user-profile .user-role {
   font-size: 12px;
-  color: rgb(255 255 255 / 70%);
+  color: var(--font-color-secondary);
 }
 
 /* --- PAGE CONTENT AREA --- */

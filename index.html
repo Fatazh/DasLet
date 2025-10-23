@@ -1,115 +1,109 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Modern Admin Dashboard</title>
-    <link
-      rel="stylesheet"
-      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
-    />
-    <link rel="stylesheet" href="css/style.css" />
-  </head>
-  <body>
-    <div class="app-container">
-      <aside class="sidebar">
-        <header>
-          <header>
-            <a href="#" class="logo-wrapper">
-              <img src="assets/images/logo.svg" alt="logo" />
-              <h3 class="logo-text">CACAKLALI</h3>
-            </a>
-          </header>
-        </header>
-        <ul>
-          <li>
-            <button type="button" class="active" onclick="onClick(this)">
-              <i class="bx bx-home"></i>
-              <p>Dashboard</p>
-            </button>
-          </li>
-          <li>
-            <button type="button" onclick="onClick(this)">
-              <i class="bx bx-package"></i>
-              <p>Products</p>
-              <i class="bx bx-chevron-down"></i>
-            </button>
-            <div class="sub-menu">
-              <ul>
-                <li><button type="button">Digital</button></li>
-                <li><button type="button">Physical</button></li>
-                <li><button type="button">Inventory</button></li>
-              </ul>
-            </div>
-          </li>
-          <li>
-            <button type="button" onclick="onClick(this)">
-              <i class="bx bx-cart"></i>
-              <p>Orders</p>
-            </button>
-          </li>
-          <li>
-            <button type="button" onclick="onClick(this)">
-              <i class="bx bx-user"></i>
-              <p>Customers</p>
-            </button>
-          </li>
-        </ul>
-      </aside>
 
-      <main class="main-content">
-        <nav class="navbar">
-          <button
-            type="button"
-            class="sidebar-burger"
-            onclick="toggleSidebar()"
-          >
-            <i class="bx bx-menu"></i>
-          </button>
-          <div class="search-bar">
-            <i class="bx bx-search"></i>
-            <input type="search" placeholder="Search..." />
-          </div>
-          <div class="user-profile">
-            <img src="https://i.pravatar.cc/40" alt="User Avatar" />
-            <div class="user-info">
-              <p class="user-name">John Doe</p>
-              <p class="user-role">Administrator</p>
-            </div>
-          </div>
-        </nav>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Modern Admin Dashboard</title>
+  <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
 
+<body>
+  <div class="app-container">
+    <aside class="sidebar">
+      <header>
+        <a href="#" class="logo-wrapper">
+          <img src="assets/images/logo.svg" alt="logo" />
+          <h3 class="logo-text">DASLET</h3>
+        </a>
+      </header>
+      <ul>
+        <li>
+          <a href="/dashboard" class="active" >
+            <i class="bx bx-home"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        <li>
+          <a href="/product" >
+            <i class="bx bx-package"></i>
+            <p>Products</p>
+            <i class="bx bx-chevron-down"></i>
+          </a>
+          <div class="sub-menu">
+            <ul>
+              <li><a href="/digital">Digital</a></li>
+              <li><a href="/physical">Physical</a></li>
+              <li><a href="/inventory">Inventory</a></li>
+            </ul>
+          </div>
+        </li>
+        <li>
+          <a href="/orders" >
+            <i class="bx bx-cart"></i>
+            <p>Orders</p>
+          </a>
+        </li>
+        <li>
+          <a href="/customer" onclick="onClick(this)">
+            <i class="bx bx-user"></i>
+            <p>Customers</p>
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <nav class="navbar">
+        <button type="button" class="sidebar-burger" onclick="toggleSidebar()">
+          <i class="bx bx-menu"></i>
+        </button>
+        <div class="search-bar">
+          <i class="bx bx-search"></i>
+          <input type="search" placeholder="Search..." />
+        </div>
+        <div class="user-profile">
+          <img src="https://i.pravatar.cc/40" alt="User Avatar" />
+          <div class="user-info">
+            <p class="user-name">John Doe</p>
+            <p class="user-role">Administrator</p>
+          </div>
+        </div>
+      </nav>
+
+      <div class="page-content">
         <div class="page-content">
-          <div class="page-content">
-            <h1>Dashboard</h1>
-            <p class="subtitle">Welcome to your modern admin dashboard!</p>
+          <h1>Dashboard</h1>
+          <p class="subtitle">Welcome to your modern admin dashboard!</p>
 
-            <div class="card">
-              <div class="card-header">
-                <h2>Sales Overview</h2>
-              </div>
-              <div class="card-body">
-                <p>
-                  Here is where you can display charts, stats, or other
-                  important sales information.
-                </p>
-              </div>
+          <div class="card">
+            <div class="card-header">
+              <h2>Sales Overview</h2>
             </div>
+            <div class="card-body">
+              <p>
+                Here is where you can display charts, stats, or other
+                important sales information.
+              </p>
+            </div>
+          </div>
 
-            <div class="card">
-              <div class="card-header">
-                <h2>Recent Activities</h2>
-              </div>
-              <div class="card-body">
-                <p>A list of recent user activities would go here.</p>
-              </div>
+          <div class="card">
+            <div class="card-header">
+              <h2>Recent Activities</h2>
+            </div>
+            <div class="card-body">
+              <p>A list of recent user activities would go here.</p>
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </div>
+    </main>
+  </div>
 
-    <script src="js/main.js"></script>
-  </body>
+  <script src="js/main.js"></script>
+</body>
+
 </html>
