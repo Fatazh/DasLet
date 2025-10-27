@@ -68,4 +68,99 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     })
   }))
+
+  if (typeof window.Chart !== "undefined") {
+    const salesChartEl = document.getElementById("salesChart");
+    if (salesChartEl) {
+      new window.Chart(salesChartEl, {
+        type: "line",
+        data: {
+          labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          datasets: [
+            {
+              label: "Revenue",
+              data: [35, 42, 38, 50, 62, 69, 72, 78, 74, 81, 88, 95],
+              fill: true,
+              tension: 0.4,
+              backgroundColor: "rgba(102, 4, 221, 0.12)",
+              borderColor: "rgba(102, 4, 221, 0.9)",
+              borderWidth: 2,
+              pointRadius: 3,
+              pointBackgroundColor: "rgba(102, 4, 221, 1)",
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: false,
+              grid: {
+                color: "rgba(107, 114, 128, 0.1)",
+              },
+              ticks: {
+                color: "#6B7280",
+                callback: (value) => `$${value}k`
+              }
+            },
+            x: {
+              grid: {
+                display: false,
+              },
+              ticks: {
+                color: "#6B7280"
+              }
+            }
+          },
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: (context) => `Revenue: $${context.parsed.y}k`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    const channelChartEl = document.getElementById("channelChart");
+    if (channelChartEl) {
+      new window.Chart(channelChartEl, {
+        type: "doughnut",
+        data: {
+          labels: ["Online", "In-Store", "Partners"],
+          datasets: [
+            {
+              data: [58, 27, 15],
+              backgroundColor: [
+                "rgba(102, 4, 221, 0.9)",
+                "rgba(46, 204, 113, 0.9)",
+                "rgba(46, 134, 222, 0.9)"
+              ],
+              borderWidth: 0,
+              hoverOffset: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: "65%",
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                color: "#6B7280",
+                usePointStyle: true
+              }
+            }
+          }
+        }
+      });
+    }
+  }
 });
