@@ -4,15 +4,39 @@ document.addEventListener("DOMContentLoaded", function () {
   const sidebarBurger = document.querySelector(".sidebar-burger");
   const menuItems = document.querySelectorAll(".sidebar ul li > a");
   const subMenuItems = document.querySelectorAll(".sub-menu ul li a");
+  const userMenuWrapper = document.querySelector(".user-menu");
+  const userMenuButton = document.getElementById("userMenuButton");
+  const userMenuCard = document.querySelector(".user-menu-card");
+
+  const collapseAllSubMenus = ({ preserveActive = true } = {}) => {
+    document.querySelectorAll(".sub-menu").forEach((subMenu) => {
+      subMenu.style.height = "0px";
+
+      const parentLink = subMenu.previousElementSibling;
+      if (!parentLink) return;
+
+      if (preserveActive && subMenu.querySelector(".active")) {
+        return;
+      }
+
+      parentLink.classList.remove("active");
+    });
+  };
 
   if (sidebarBurger && sidebar) {
     sidebarBurger.addEventListener("click", () => {
       sidebar.classList.toggle("collapsed");
 
       if (sidebar.classList.contains("collapsed")) {
-        document.querySelectorAll(".sub-menu").forEach(sm => {
-          sm.style.height = "0px";
-        });
+        collapseAllSubMenus();
+      }
+    });
+  }
+
+  if (sidebar) {
+    sidebar.addEventListener("mouseleave", () => {
+      if (sidebar.classList.contains("collapsed")) {
+        collapseAllSubMenus();
       }
     });
   }
@@ -21,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   menuItems.forEach((item) => {
     item.addEventListener("click", function (event) {
-
       event.preventDefault();
 
       const clickedItem = this;
@@ -37,35 +60,59 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
           const subMenuHeight = subMenu.querySelector("ul").offsetHeight;
           subMenu.style.height = `${subMenuHeight}px`;
-          clickedItem.classList.add("active")
+          clickedItem.classList.add("active");
         }
       } else {
-        menuItems.forEach(i => i.classList.remove("active"));
+        menuItems.forEach((i) => i.classList.remove("active"));
         clickedItem.classList.add("active");
       }
     });
   });
 
-  subMenuItems.forEach((subItem => {
+  subMenuItems.forEach((subItem) => {
     subItem.addEventListener("click", function (event) {
       event.preventDefault();
-
       event.stopPropagation();
 
-      subMenuItems.forEach(i => i.classList.remove("active"));
+      subMenuItems.forEach((i) => i.classList.remove("active"));
 
       this.classList.add("active");
 
-      const parentMenuLink = this.closest(".sidebar > ul > li").querySelector("a");
-      if(parentMenuLink){
-        menuItems.forEach(i => {
-          if(i !== parentMenuLink){
+      const parentMenuLink = this.closest(".sidebar > ul > li")?.querySelector("a");
+      if (parentMenuLink) {
+        menuItems.forEach((i) => {
+          if (i !== parentMenuLink) {
             i.classList.remove("active");
           }
         });
 
         parentMenuLink.classList.add("active");
       }
-    })
-  }))
+    });
+  });
+
+  if (userMenuWrapper && userMenuButton && userMenuCard) {
+    const closeUserMenu = () => {
+      userMenuWrapper.classList.remove("open");
+      userMenuButton.setAttribute("aria-expanded", "false");
+    };
+
+    userMenuButton.addEventListener("click", (event) => {
+      event.stopPropagation();
+      const isOpen = userMenuWrapper.classList.toggle("open");
+      userMenuButton.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!userMenuWrapper.contains(event.target)) {
+        closeUserMenu();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeUserMenu();
+      }
+    });
+  }
 });
