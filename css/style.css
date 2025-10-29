@@ -4,49 +4,29 @@
   --transition-duration: 0.4s;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: "Poppins", sans-serif;
-  background-color: #F4F6FB;
-  color: #0F172A;
-}
-
-.app-container {
-  min-height: 100vh;
-}
-
+/* ===== Sidebar width + collapse behaviour (perlu CSS) ===== */
 .sidebar {
   width: var(--sidebar-width-expanded);
   transition: width var(--transition-duration) ease;
   overflow: hidden;
 }
 
-.sidebar nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
+/* Chevron anim + active state visual (tetap perlu) */
+.sidebar .bx-chevron-down {
+  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
+}
+.sidebar a.active .bx-chevron-down {
+  transform: rotate(-180deg);
 }
 
-.sidebar a {
-  color: rgba(255, 255, 255, 0.85);
-  text-decoration: none;
-}
-
-.sidebar a:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.08);
-}
-
+/* Style "active" untuk link utama sidebar (biarkan di CSS, karena JS toggle kelas .active) */
 .sidebar a.active {
   color: #fff;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.12));
+  background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.12));
   box-shadow: 0 18px 35px rgba(76, 61, 255, 0.25);
 }
 
+/* Transisi hide label saat collapsed (perlu selector kompleks) */
 .sidebar span.flex-1,
 .sidebar header .logo-text,
 .sidebar .bx-chevron-down {
@@ -55,19 +35,9 @@ body {
   width: auto;
   pointer-events: auto;
 }
-
-.sidebar .bx-chevron-down {
-  transition: transform 0.3s ease, opacity 0.3s ease, width 0.3s ease;
-}
-
-.sidebar a.active .bx-chevron-down {
-  transform: rotate(-180deg);
-}
-
 .sidebar.collapsed {
   width: var(--sidebar-width-collapsed);
 }
-
 .sidebar.collapsed span.flex-1,
 .sidebar.collapsed header .logo-text,
 .sidebar.collapsed .bx-chevron-down {
@@ -76,88 +46,11 @@ body {
   pointer-events: none;
 }
 
-.sidebar.collapsed:hover {
-  width: var(--sidebar-width-expanded);
-}
-
-.sidebar nav {
-  overflow-y: auto;
-}
-
-.sidebar.collapsed nav {
-  overflow-y: hidden;
-}
-
-.sidebar.collapsed:hover nav {
-  overflow-y: auto;
-}
-
-.sidebar.collapsed:hover span.flex-1,
-.sidebar.collapsed:hover header .logo-text,
-.sidebar.collapsed:hover .bx-chevron-down {
-  opacity: 1;
-  width: auto;
-  pointer-events: auto;
-}
-
-.user-menu-card {
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-8px) scale(0.97);
-}
-
-.user-menu.open .user-menu-card {
-  pointer-events: auto;
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
-
-.sub-menu {
-  height: 0;
-  overflow: hidden;
-  transition: height var(--transition-duration) ease;
-}
-
-.sub-menu ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.sub-menu a {
-  display: block;
-  color: rgba(255, 255, 255, 0.75);
-  text-decoration: none;
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-.sub-menu a:hover {
-  color: #fff;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.sub-menu a.active {
-  color: #fff;
-  font-weight: 600;
-}
-
-.sidebar-burger {
-  transition: transform 0.2s ease;
-}
-
-.sidebar-burger:active {
-  transform: scale(0.96);
-}
-
-.page-content {
-  padding-bottom: 3rem;
-}
-
+/* Hover-expand hanya di desktop; di mobile jangan expand via hover */
 @media (max-width: 1024px) {
   .sidebar.collapsed:hover {
     width: var(--sidebar-width-collapsed);
   }
-
   .sidebar.collapsed:hover span.flex-1,
   .sidebar.collapsed:hover header .logo-text,
   .sidebar.collapsed:hover .bx-chevron-down {
@@ -165,4 +58,53 @@ body {
     width: 0;
     pointer-events: none;
   }
+}
+@media (min-width: 1025px) {
+  .sidebar.collapsed:hover {
+    width: var(--sidebar-width-expanded);
+  }
+  .sidebar.collapsed:hover span.flex-1,
+  .sidebar.collapsed:hover header .logo-text,
+  .sidebar.collapsed:hover .bx-chevron-down {
+    opacity: 1;
+    width: auto;
+    pointer-events: auto;
+  }
+}
+
+/* Scroll behaviour sidebar nav + hide scrollbar overlay (cross-browser) */
+.sidebar nav {
+  overflow-y: auto;
+  scrollbar-width: none;        /* Firefox */
+  -ms-overflow-style: none;     /* IE/Edge lama */
+  overscroll-behavior: contain; /* cegah scroll "tembus" ke body */
+}
+.sidebar nav::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.sidebar nav::-webkit-scrollbar-thumb,
+.sidebar nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* ===== Sub-menu height animation (perlu JS + CSS) ===== */
+.sub-menu {
+  height: 0;
+  overflow: hidden;
+  transition: height var(--transition-duration) ease;
+}
+
+/* ===== User menu open/close (pakai .open pada wrapper) ===== */
+.user-menu-card {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-8px) scale(0.97);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.user-menu.open .user-menu-card {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
